@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import paper from './paper.png';
 import './App.css';
-import { Button} from 'react-bootstrap';
 
 class App extends Component {
   
@@ -11,7 +10,8 @@ class App extends Component {
       error: null,
       isLoaded: false,
       items: [],  
-      count:0,    
+      count:0,
+      stadistics: [],    
     };
   }
 
@@ -67,15 +67,31 @@ class App extends Component {
     })
   }
 
-  incrementCount= () => {
-    this.setState({
-      count:0
+
+  fetchDataStatistics = () => {
+    const {stadistics} = this.state;    
+    fetch("http://localhost:9091/api/v1/games/", {
+      method: "GET",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      }
+    })
+    .then((resp) => {
+      return resp.json()
+    }) 
+    .then((data) => {
+      this.setState({ stadistics: data })                    
+    })
+    .catch((error) => {
+      console.log(error, "catch the hoop")
     })
   }
+
   
 
   render() {
-    const { error, isLoaded, items } = this.state;   
+    const { error, isLoaded, items, stadistics } = this.state;       
     this.state.count=0;                 
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -85,22 +101,20 @@ class App extends Component {
       return (
         <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={paper} className="App-logo" alt="logo" />
           <h2>
             
           </h2>
         </div>
-        <p className="App-intro">
-          Welcome to Paper Rock Scissors Game
-        </p>
+        <p><h1>Welcome to Paper Rock Scissors Game </h1></p>
+                  
         <div>        
-        <Button onClick={this.fetchDataPlayRound} variant="primary">Play Round like a ROCK man</Button>          
+        <button onClick={this.fetchDataPlayRound} class="myButton">Play Round like a ROCK man</button>          
 
             <p><h1>General data of the game </h1></p>
             <table class="blueTable">
                 <thead>
-                <tr>                
-                <th>Game ID</th>
+                <tr>                                
                 <th>Number Of Round</th>
                 <th>Player One Name</th>
                 <th>Player One Score</th>
@@ -115,8 +129,7 @@ class App extends Component {
                 </tfoot>
                 <tbody>
                 
-                <tr>
-                <td>{items.id}</td>
+                <tr>                
                 <td>{items.numberOfRounds}</td>                
                 <td>{items.playerOneName}</td>
                 <td>{items.playerOneScore}</td>
@@ -152,9 +165,34 @@ class App extends Component {
                 </tbody>
                 </table>
                 <p><h1>If you want to reset the game please click the button or press F5</h1></p>
-                <Button onClick={this.fetchDataReset} variant="primary">Reset</Button>
+                <button onClick={this.fetchDataReset} class="myButton">Reset Game</button>
+                <button onClick={this.fetchDataStatistics} class="myButton">Global Games Statistics</button>
                 <h1></h1>
-                <div className="App-header">                  
+                <p><h1>Global Games Statistics</h1></p>
+                <table class="blueTable">
+                    <thead>
+                    <tr>                
+                    <th>Total rounds played</th>
+                    <th>total Wins for first players</th>
+                    <th>total Wins for second players</th>
+                    <th>total draws</th>                                        
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+              
+                    </tr>
+                    </tfoot>
+                    <tbody>                    
+                    <tr>
+                    <td>{stadistics.totalRoundsPlayed}</td>
+                    <td>{stadistics.totalWinsFirstPlayer}</td>                
+                    <td>{stadistics.totalWinsSecondPlayer}</td>
+                    <td>{stadistics.totalDraws}</td>             
+                    </tr>                                 
+                    </tbody>
+                </table>
+                <div className="App-footer">                  
                   <h2>                    
                   </h2>
                 </div>
