@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "expo-constants": "^7.0.0",
     "react": "^16.9.0",
+    "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "^16.9.0",
+    "react-native-web": "^0.11.7",
     "react-scripts": "0.9.5"
   },
+  "modules": true,
   "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
