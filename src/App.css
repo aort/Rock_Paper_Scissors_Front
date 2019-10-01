@@ -128,5 +128,20 @@ table.blueTable tfoot .links a{
 }
 .myButton:active {
 	position:relative;
-	top:1px;
+  top:15px;
+  
+}
+
+.mylink:link {
+  color: green;
+  margin: 20px;
+  padding: 30px;
+}
+
+.mylink:visited {
+  color: green;
+}
+
+.mylink:hover {
+  color: blue;
 }

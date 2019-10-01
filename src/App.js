@@ -106,6 +106,7 @@ class App extends Component {
             
           </h2>
         </div>
+        <a href="http://localhost:9091/swagger-ui.html#/" class="mylink">See API documentation in swagger</a>
         <p><h1>Welcome to Paper Rock Scissors Game </h1></p>
                   
         <div>        
